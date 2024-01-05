@@ -6,39 +6,39 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
         .setDescription("Plays a song")
-        .addSubcommand(subcommand => {
+        .addSubcommand(subcommand =>
             subcommand
                 .setName("search")
                 .setDescription("Searches for a song")
-                .addStringOption(option => {
+                .addStringOption(option =>
                     option
                         .setName("searchterms")
                         .setDescription("search keywords")
-                        .setRequired(true);
-                })
-        })
-        .addSubcommand(subcommand => {
+                        .setRequired(true)
+                )
+        )
+        .addSubcommand(subcommand =>
             subcommand
                 .setName("playlist")
                 .setDescription("Plays playlist from YT")
-                .addStringOption(option => {
+                .addStringOption(option =>
                     option
                         .setName("url")
                         .setDescription("playlist url")
-                        .setRequired(true);
-                })
-        })
-        .addSubcommand(subcommand => {
+                        .setRequired(true)
+                )
+        )
+        .addSubcommand(subcommand =>
             subcommand
                 .setName('song')
                 .setDescription("Plays song from YT")
-                .addStringOption(option => {
+                .addStringOption(option =>
                     option
                         .setName("searchterms")
                         .setDescription('search keywords')
                         .setRequired(true)
-                })
-        }),
+                )
+        ),
     execute: async ({client, interaction}) => {
         if (!interaction.member.voice.channel) {
             await interaction.reply("You must be in voice channel to use this command.")
@@ -52,7 +52,7 @@ module.exports = {
         let embed = new MessageEmbed();
 
         if (interaction.options.getSubcommand() === 'song') {
-            let url = ineraction.options.getString('url')
+            let url = interaction.options.getString('url')
 
             const result = await client.player.search(url, {
                 requestedBy: interaction.user,
@@ -73,7 +73,7 @@ module.exports = {
                 .setFooter({text: `Duration: ${song.duration}`})
 
         } else if (interaction.options.getSubcommand() === 'playlist') {
-            let url = ineraction.options.getString('url')
+            let url = interaction.options.getString('url')
 
             const result = await client.player.search(url, {
                 requestedBy: interaction.user,
@@ -93,7 +93,7 @@ module.exports = {
                 .setThumbnail(playlist.thumbnail)
                 .setFooter({text: `Duration: ${playlist.duration}`})
         } else if (interaction.options.getSubcommand() === 'searchterms') {
-            let url = ineraction.options.getString('url')
+            let url = interaction.options.getString('url')
 
             const result = await client.player.search(url, {
                 requestedBy: interaction.user,
